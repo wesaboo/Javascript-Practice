@@ -4,47 +4,18 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createStore } from "redux";
+import allReducer from "./reducers";
+import { Provider } from "react-redux";
 
-// STORE - Globalized State, accessed by all components
-
-// ACTION - Name of an action, INCREMENT in this case, describes what you want to do
-// function that returns an object
-const increment = () => {
-  return {
-    type: "INCREMENT",
-  };
-};
-const decrement = () => {
-  return {
-    type: "DECREMENT",
-  };
-};
-
-// REDUCER - Modifies state using the provided action
-const counter = (state = 0, action) => {
-  switch (action.type) {
-    case "INCREMENT":
-      return state + 1;
-    case "DECREMENT":
-      return state - 1;
-  }
-};
-
-let store = createStore(counter);
-
-// Display in console
-store.subscribe(() => console.log(store.getState()));
-
-// DISPATCH - Starts the action which is sent to the reducer
-store.dispatch(increment());
-store.dispatch(increment());
-store.dispatch(increment());
-store.dispatch(decrement());
+const store = createStore(
+  allReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById("root")
 );
 
